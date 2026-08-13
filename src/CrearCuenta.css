@@ -1,0 +1,23 @@
+.text-tituloCC{
+  font-size: 30px;
+   color: rgb(255, 255, 255);
+}
+
+.text-subtitulo{
+  font-size: 18px;
+   color: rgb(255, 255, 255);
+}
+
+.input-custom {
+  background-color: #f0f0f0;
+  color: #333;   
+  border: 1px solid #ccc;
+}
+
+.bg-fondocc {
+  background-image: url('./assets/logocc.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+

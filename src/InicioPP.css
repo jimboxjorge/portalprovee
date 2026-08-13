@@ -1,0 +1,150 @@
+/* Contenedor principal */
+.inicio-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #F8FAFC;
+}
+
+/* Barra superior */
+.barra-superior {
+  height: 64px;
+  width: 100%;
+  background-color: #001529;
+
+  display: flex;
+  align-items: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  z-index: 1000;
+}
+
+/* Botón menu */
+.boton-menu {
+  color: white !important;
+  font-size: 20px;
+  width: 64px;
+  height: 64px;
+}
+
+.boton-menu:hover {
+  background-color: #2563EB !important;
+}
+
+/* Logo */
+.logo-superior {
+  width: 120px;
+  height: 60px;
+  object-fit: contain;
+  margin-left: 10px;
+}
+
+/* Botón cerrar sesión */
+.boton-logout {
+  color: white !important;
+  font-size: 15px;
+
+  margin-left: auto;
+  margin-right: 20px;
+
+  height: 44px;
+
+  transition: all 0.2s ease;
+}
+
+.boton-logout:hover {
+  background-color: #374151 !important;
+  color: #ff4d4f !important;
+}
+
+/* Menú lateral */
+.menu-lateral {
+  position: fixed;
+
+  left: 0;
+  top: 64px;
+
+  height: calc(100vh - 64px);
+
+  background-color: #001529;
+
+  transition: width 0.2s;
+
+  z-index: 999;
+}
+
+.menu-lateral .ant-menu {
+  height: 100%;
+  border-right: none;
+}
+
+/* Texto de las opciones */
+.menu-lateral .ant-menu-item {
+  color: #CBD5E1;
+}
+
+/* Elemento seleccionado */
+.menu-lateral .ant-menu-item-selected {
+  background-color: #2563EB !important;
+  color: #FFFFFF !important;
+}
+
+/* Iconos */
+.menu-lateral .ant-menu-item .anticon {
+  color: #94A3B8;
+}
+
+/* Icono del elemento seleccionado */
+.menu-lateral .ant-menu-item-selected .anticon {
+  color: #FFFFFF !important;
+}
+
+/* Submenús */
+.menu-lateral .ant-menu-sub {
+  background-color: #141d2e !important;
+}
+
+/* Hover */
+.menu-lateral .ant-menu-item:hover {
+  background-color: #1E293B !important;
+  color: #FFFFFF !important;
+}
+
+/* Contenido principal */
+.contenido-principal {
+  position: fixed;
+
+  top: 64px;
+  right: 0;
+  bottom: 0;
+
+  width: calc(100% - 256px);
+
+  padding: 30px;
+
+  box-sizing: border-box;
+
+  background-color: #F8FAFC;
+
+  overflow-y: auto;
+
+  transition: width 0.2s ease;
+}
+
+/* Cuando el menú está cerrado */
+.contenido-principal.menu-colapsado {
+  width: calc(100% - 80px);
+}
+
+/* Contenedor centrado */
+.contenido-centro {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 0 auto;
+}
