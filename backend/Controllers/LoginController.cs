@@ -17,77 +17,94 @@ namespace portal_proveedor.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(
-            [FromBody] PortalProveedoresAPI login)
+        public IActionResult Login([FromBody] PortalProveedoresAPI login)
         {
-            string conexion =
-                _configuration.GetConnectionString("ConexionDB");
-
-            using (SqlConnection cn =
-                   new SqlConnection(conexion))
+            try
             {
-                cn.Open();
+                string? conexion =
+                    _configuration.GetConnectionString("ConexionDB");
 
-                string sql = @"
-                    SELECT Password, Confirmado
-                    FROM Portal_Proveed
-                    WHERE Correo = @Correo";
-
-                using (SqlCommand cmd =
-                       new SqlCommand(sql, cn))
+                // Verificar que Azure esté recibiendo ConexionDB
+                if (string.IsNullOrWhiteSpace(conexion))
                 {
-                    cmd.Parameters.AddWithValue(
-                        "@Correo",
-                        login.Correo);
-
-                    using (SqlDataReader dr =
-                           cmd.ExecuteReader())
+                    return StatusCode(500, new
                     {
-                        if (!dr.Read())
+                        success = false,
+                        mensaje = "No se encontró la cadena de conexión ConexionDB."
+                    });
+                }
+
+                using (SqlConnection cn = new SqlConnection(conexion))
+                {
+                    cn.Open();
+
+                    string sql = @"
+                        SELECT Password, Confirmado
+                        FROM Portal_Proveed
+                        WHERE Correo = @Correo";
+
+                    using (SqlCommand cmd = new SqlCommand(sql, cn))
+                    {
+                        cmd.Parameters.AddWithValue(
+                            "@Correo",
+                            login.Correo);
+
+                        using (SqlDataReader dr = cmd.ExecuteReader())
                         {
-                            return Unauthorized(new
+                            if (!dr.Read())
                             {
-                                success = false,
-                                mensaje = "Correo incorrectos."
+                                return Unauthorized(new
+                                {
+                                    success = false,
+                                    mensaje = "Correo incorrecto."
+                                });
+                            }
+
+                            string hashGuardado =
+                                dr["Password"]?.ToString() ?? "";
+
+                            bool confirmado =
+                                Convert.ToBoolean(dr["Confirmado"]);
+
+                            bool passwordCorrecto =
+                                BCrypt.Net.BCrypt.Verify(
+                                    login.Password,
+                                    hashGuardado);
+
+                            if (!passwordCorrecto)
+                            {
+                                return Unauthorized(new
+                                {
+                                    success = false,
+                                    mensaje = "Contraseña incorrecta."
+                                });
+                            }
+
+                            if (!confirmado)
+                            {
+                                return Unauthorized(new
+                                {
+                                    success = false,
+                                    mensaje = "Debes confirmar tu correo electrónico antes de iniciar sesión."
+                                });
+                            }
+
+                            return Ok(new
+                            {
+                                success = true,
+                                mensaje = "Acceso correcto"
                             });
                         }
-
-                        string hashGuardado =
-                            dr["Password"].ToString();
-
-                        bool confirmado =
-                            Convert.ToBoolean(dr["Confirmado"]);
-
-                        bool passwordCorrecto =
-                            BCrypt.Net.BCrypt.Verify(
-                                login.Password,
-                                hashGuardado);
-
-                        if (!passwordCorrecto)
-                        {
-                            return Unauthorized(new
-                            {
-                                success = false,
-                                mensaje = "Contraseña incorrectos."
-                            });
-                        }
-
-                        if (!confirmado)
-                        {
-                            return Unauthorized(new
-                            {
-                                success = false,
-                                mensaje = "Debes confirmar tu correo electrónico antes de iniciar sesión."
-                            });
-                        }
-
-                        return Ok(new
-                        {
-                            success = true,
-                            mensaje = "Acceso correcto"
-                        });
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    mensaje = ex.Message
+                });
             }
         }
     }
