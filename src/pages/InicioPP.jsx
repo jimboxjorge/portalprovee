@@ -146,14 +146,14 @@ const handleMenuClick = ({ key }) => {
           width: collapsed ? 80 : 256
         }}>
         <Menu
-  selectedKeys={[obtenerKeySeleccionada()]}
-  defaultOpenKeys={['sub1']}
-  mode="inline"
-  theme="dark"
-  inlineCollapsed={collapsed}
-  items={items}
-  onClick={handleMenuClick}
-/>
+          selectedKeys={[obtenerKeySeleccionada()]}
+          defaultOpenKeys={['sub1']}
+          mode="inline"
+          theme="dark"
+          inlineCollapsed={collapsed}
+          items={items}
+          onClick={handleMenuClick}
+        />
       </div>
       <div
         className={`contenido-principal ${
