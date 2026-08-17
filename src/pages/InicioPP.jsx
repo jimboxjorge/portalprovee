@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import logor from '../assets/mcvilllogo.png';
-import { useNavigate, Outlet } from 'react-router-dom';
+import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import '../InicioPP.css';
-
 import { AppstoreOutlined, FileTextOutlined, ContainerOutlined, DesktopOutlined, CheckCircleOutlined, MenuFoldOutlined, 
-  MenuUnfoldOutlined, PieChartOutlined, LogoutOutlined,
-} from '@ant-design/icons';
-
+  MenuUnfoldOutlined, PieChartOutlined, LogoutOutlined,} from '@ant-design/icons';
 import { Button, Menu } from 'antd';
 
 const items = [
@@ -66,6 +63,7 @@ const items = [
 function InicioPP() {
 
   const navigate = useNavigate();
+  const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
 
   const toggleCollapsed = () => {
@@ -73,7 +71,6 @@ function InicioPP() {
   };
 
   const cerrarSesion = () => {
-
     // Limpiar información de sesión
     localStorage.removeItem("usuario");
     localStorage.removeItem("token");
@@ -81,10 +78,21 @@ function InicioPP() {
     // Regresar al Login
     navigate("/");
   };
+const rutas = {
+  '/inicio': '1',
+  '/inicio/ordenesdecompra': '2',
+  '/inicio/proveedores': '3',
+  '/inicio/autorizaciondefacturas': '4',
+  '/inicio/historicodefacturas': '5'
+};
 
- const handleMenuClick = ({ key }) => {
+const obtenerKeySeleccionada = () => {
+  return rutas[location.pathname] || '1';
+};
 
-  const rutas = {
+const handleMenuClick = ({ key }) => {
+
+  const rutasNavegacion = {
     '1': '/inicio',
     '2': '/inicio/ordenesdecompra',
     '3': '/inicio/proveedores',
@@ -92,10 +100,9 @@ function InicioPP() {
     '5': '/inicio/historicodefacturas'
   };
 
-  if (rutas[key]) {
-    navigate(rutas[key]);
+  if (rutasNavegacion[key]) {
+    navigate(rutasNavegacion[key]);
   }
-
 };
   return (
     <div className="inicio-container">
@@ -107,8 +114,7 @@ function InicioPP() {
         <Button
           type="text"
           onClick={toggleCollapsed}
-          className="boton-menu"
-        >
+          className="boton-menu">
           {collapsed
             ? <MenuUnfoldOutlined />
             : <MenuFoldOutlined />
@@ -127,8 +133,7 @@ function InicioPP() {
           type="text"
           icon={<LogoutOutlined />}
           className="boton-logout"
-          onClick={cerrarSesion}
-        >
+          onClick={cerrarSesion}>
           Cerrar sesión
         </Button>
 
@@ -139,28 +144,26 @@ function InicioPP() {
         className="menu-lateral"
         style={{
           width: collapsed ? 80 : 256
-        }}
-      >
+        }}>
         <Menu
-          defaultSelectedKeys={['1']}
-          defaultOpenKeys={['sub1']}
-          mode="inline"
-          theme="dark"
-          inlineCollapsed={collapsed}
-          items={items}
-          onClick={handleMenuClick}
-        />
+  selectedKeys={[obtenerKeySeleccionada()]}
+  defaultOpenKeys={['sub1']}
+  mode="inline"
+  theme="dark"
+  inlineCollapsed={collapsed}
+  items={items}
+  onClick={handleMenuClick}
+/>
       </div>
       <div
-  className={`contenido-principal ${
-    collapsed ? 'menu-colapsado' : 'menu-expandido'
-  }`}
->
-  <div className="contenido-centro">
-    <Outlet />
-  </div>
+        className={`contenido-principal ${
+          collapsed ? 'menu-colapsado' : 'menu-expandido'
+        }`}
+      >
+      <div className="contenido-centro">
+        <Outlet />
+      </div>
 </div>
-
   </div>
   );
 }
