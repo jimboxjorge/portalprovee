@@ -3,6 +3,8 @@ import { Card, Col, Row, Button, Input, Space, Table} from 'antd';
 import { FileTextOutlined, DollarOutlined, ShoppingCartOutlined, SearchOutlined} from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import '../Inicio.css';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend} from 'chart.js';
+import { Line } from 'react-chartjs-2';
 
 const data = [
   {
@@ -31,6 +33,49 @@ const data = [
   },
 ];
 
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend
+);
+const opcionesGrafica = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top',
+    },
+    title: {
+      display: true,
+      text: 'Facturas por mes',
+    },
+  },
+};
+
+const datosGrafica = {
+  labels: [
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio'
+  ],
+  datasets: [
+    {
+      fill: true,
+      label: 'Facturas',
+      data: [120, 190, 150, 280, 220, 310, 260],
+      borderColor: 'rgb(37, 99, 235)',
+      backgroundColor: 'rgba(37, 99, 235, 0.15)',
+    },
+  ],
+};
 const Inicio = () => {
 
   const [searchText, setSearchText] = useState('');
@@ -275,14 +320,25 @@ const Inicio = () => {
         </Col>
       </Row>
 
-      {/* TABLA */}
       <Row gutter={[16, 16]} className="fila-tabla">
-        <Col span={12} offset={0}>
+
+        {/* TABLA */}
+        <Col span={12} className="columna-tabla">
           <div className="contenedor-tabla">
             <Table
               columns={columns}
               dataSource={data}
               pagination={false}
+            />
+          </div>
+        </Col>
+
+        {/* GRÁFICA */}
+        <Col span={12}>
+          <div className="contenedor-grafica">
+            <Line
+              options={opcionesGrafica}
+              data={datosGrafica}
             />
           </div>
         </Col>

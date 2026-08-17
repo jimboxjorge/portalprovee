@@ -31,11 +31,14 @@
   margin-top: 50px;
 }
 
-.contenedor-tabla {
+.contenedor-tabla,
+.contenedor-grafica {
   background-color: white;
   border-radius: 10px;
-  margin-left: -120px;
-  margin-right: 50px;
   padding: 16px;
   box-shadow: 0 4px 12px rgba(87, 86, 86, 0.10);
+}
+
+.columna-tabla {
+  transform: translateX(-120px);
 }
