@@ -33,16 +33,7 @@ const data = [
   },
 ];
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Filler,
-  Legend
-);
+ChartJS.register( CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend);
 const opcionesGrafica = {
   responsive: true,
   plugins: {
@@ -94,17 +85,11 @@ const Inicio = () => {
   };
 
   const getColumnSearchProps = dataIndex => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-      close
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close
     }) => (
       <div
         style={{ padding: 8 }}
-        onKeyDown={e => e.stopPropagation()}
-      >
+        onKeyDown={e => e.stopPropagation()}>
         <Input
           ref={searchInput}
           placeholder={`Buscar ${dataIndex}`}
@@ -139,8 +124,7 @@ const Inicio = () => {
             }
             icon={<SearchOutlined />}
             size="small"
-            style={{ width: 90 }}
-          >
+            style={{ width: 90 }}>
             Buscar
           </Button>
 
@@ -150,16 +134,14 @@ const Inicio = () => {
               handleReset(clearFilters)
             }
             size="small"
-            style={{ width: 90 }}
-          >
+            style={{ width: 90 }}>
             Limpiar
           </Button>
 
           <Button
             type="link"
             size="small"
-            onClick={() => close()}
-          >
+            onClick={() => close()}>
             Cerrar
           </Button>
         </Space>
@@ -238,21 +220,17 @@ const Inicio = () => {
     <>
       {/* CARDS */}
       <Row gutter={[16, 16]}>
-
         <Col span={6}>
           <Card
             variant="borderless"
-            className="card-dashboard"
-          >
+            className="card-dashboard">
             <div className="card-titulo">
               <span>Total de Facturas</span>
-
               <div className="titulo-linea">
                 <span></span>
                 <FileTextOutlined />
               </div>
             </div>
-
             <div className="card-valor">
               25
             </div>
@@ -262,17 +240,14 @@ const Inicio = () => {
         <Col span={6}>
           <Card
             variant="borderless"
-            className="card-dashboard"
-          >
+            className="card-dashboard">
             <div className="card-titulo">
               <span>Monto total de Facturas</span>
-
               <div className="titulo-linea">
                 <span></span>
                 <DollarOutlined />
               </div>
             </div>
-
             <div className="card-valor">
               $18,500.00
             </div>
@@ -282,17 +257,14 @@ const Inicio = () => {
         <Col span={6}>
           <Card
             variant="borderless"
-            className="card-dashboard"
-          >
+            className="card-dashboard">
             <div className="card-titulo">
               <span>Total de Pedidos</span>
-
               <div className="titulo-linea">
                 <span></span>
                 <ShoppingCartOutlined />
               </div>
             </div>
-
             <div className="card-valor">
               10
             </div>
@@ -302,17 +274,14 @@ const Inicio = () => {
         <Col span={6}>
           <Card
             variant="borderless"
-            className="card-dashboard"
-          >
+            className="card-dashboard">
             <div className="card-titulo">
               <span>Total de Pedidos</span>
-
               <div className="titulo-linea">
                 <span></span>
                 <ShoppingCartOutlined />
               </div>
             </div>
-
             <div className="card-valor">
               10
             </div>
@@ -321,7 +290,6 @@ const Inicio = () => {
       </Row>
 
       <Row gutter={[16, 16]} className="fila-tabla">
-
         {/* TABLA */}
         <Col span={12} className="columna-tabla">
           <div className="contenedor-tabla">
@@ -332,7 +300,6 @@ const Inicio = () => {
             />
           </div>
         </Col>
-
         {/* GRÁFICA */}
         <Col span={12}>
           <div className="contenedor-grafica">

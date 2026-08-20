@@ -1,0 +1,12 @@
+.fila-tablaa {
+  width: 110%;
+}
+
+.contenedor-tablaa {
+  width: 105%;
+  margin-left: -180px;
+}
+
+.ant-table-thead > tr > th {
+  background-color: #e2e2e2a2 !important;
+}
