@@ -42,9 +42,7 @@ namespace portal_proveedor.Controllers
                 using (SqlCommand cmdExiste =
                        new SqlCommand(sqlExiste, cn))
                 {
-                    cmdExiste.Parameters.AddWithValue(
-                        "@Correo",
-                        proveedor.Correo);
+                    cmdExiste.Parameters.AddWithValue("@Correo", proveedor.Correo);
 
                     int existe =
                         Convert.ToInt32(
@@ -81,22 +79,10 @@ namespace portal_proveedor.Controllers
                 using (SqlCommand cmd =
                        new SqlCommand(sqlInsert, cn))
                 {
-                    cmd.Parameters.AddWithValue(
-                        "@Nombre",
-                        proveedor.Nombre);
-
-                    cmd.Parameters.AddWithValue(
-                        "@Correo",
-                        proveedor.Correo);
-
-                    cmd.Parameters.AddWithValue(
-                        "@Password",
-                        hash);
-
-                    cmd.Parameters.AddWithValue(
-                        "@Token",
-                        token);
-
+                    cmd.Parameters.AddWithValue("@Nombre",proveedor.Nombre);
+                    cmd.Parameters.AddWithValue("@Correo",proveedor.Correo);
+                    cmd.Parameters.AddWithValue("@Password",hash);
+                    cmd.Parameters.AddWithValue("@Token", token);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -149,7 +135,6 @@ namespace portal_proveedor.Controllers
                   </div>
                 ";
 
-
                 var msg =
                     MailHelper.CreateSingleEmail(
                         from,
@@ -158,7 +143,18 @@ namespace portal_proveedor.Controllers
                         "",
                         html);
 
-                await client.SendEmailAsync(msg);
+                var response = await client.SendEmailAsync(msg);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var body = await response.Body.ReadAsStringAsync();
+
+                    return BadRequest(new
+                    {
+                        success = false,
+                        mensaje = $"SendGrid rechazó el correo. Status: {response.StatusCode}. Detalle: {body}"
+                    });
+                }
             }
             catch (Exception ex)
             {
@@ -195,23 +191,19 @@ namespace portal_proveedor.Controllers
                 using (SqlCommand cmd =
                        new SqlCommand(sql, cn))
                 {
-                    cmd.Parameters.AddWithValue(
-                        "@Token",
-                        token);
+                    cmd.Parameters.AddWithValue("@Token", token);
 
                     int filas =
                         cmd.ExecuteNonQuery();
 
                     if (filas == 0)
                     {
-                        return BadRequest(
-                            "Token inválido.");
+                        return BadRequest("Token inválido.");
                     }
                 }
             }
 
-            return Ok(
-                "Cuenta confirmada correctamente, regrese a la pagina principal.");
+            return Ok("Cuenta confirmada correctamente, regrese a la pagina principal.");
         }
     }
 }
