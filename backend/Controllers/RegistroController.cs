@@ -119,7 +119,7 @@ namespace portal_proveedor.Controllers
                         proveedor.Correo);
 
                 string urlConfirmacion =
-                    $"https://localhost:7231/api/Registro/confirmar/{token}";
+                    $"https://portal-proveedores-api-fje7dya0h2c7b5bw.mexicocentral-01.azurewebsites.net/api/Registro/confirmar/{token}";
 
                 string asunto =
                     "Confirmación de cuenta";
