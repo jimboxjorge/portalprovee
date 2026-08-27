@@ -63,7 +63,7 @@ namespace portal_proveedor.Controllers
             }
 
             string link =
-                $"http://localhost:5173/generarNuevaContra/{token}";
+                $"https://portal-proveedores-api-fje7dya0h2c7b5bw.mexicocentral-01.azurewebsites.net/generarNuevaContra/{token}";
 
             var apiKey =
                 _configuration["SendGrid:ApiKey"];

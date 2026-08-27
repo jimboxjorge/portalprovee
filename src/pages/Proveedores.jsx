@@ -18,7 +18,7 @@ const Proveedores = () => {
   const cargarProveedores = async () => {
     try {
       const response = await fetch(
-        'https://localhost:7231/api/Proveedores'
+        'https://portal-proveedores-api-fje7dya0h2c7b5bw.mexicocentral-01.azurewebsites.net/api/Proveedores'
       );
 
       if (!response.ok) {
@@ -131,7 +131,7 @@ const Proveedores = () => {
 
         const response =
           await fetch(
-            'https://localhost:7231/api/Proveedores',
+            'https://portal-proveedores-api-fje7dya0h2c7b5bw.mexicocentral-01.azurewebsites.net/api/Proveedores',
             {
 
               method:
