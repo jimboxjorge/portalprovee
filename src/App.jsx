@@ -9,7 +9,7 @@ import Ordenes_de_Compra from "./pages/Ordenes_de_Compra";
 import Autorizacion_de_facturas from "./pages/Autorizacion_de_facturas";
 import Historico_de_facturas from "./pages/Historico_de_facturas";
 import Proveedores from "./pages/Proveedores";
-import ProtectedRoute from "./ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
