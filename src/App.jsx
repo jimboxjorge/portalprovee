@@ -9,6 +9,7 @@ import Ordenes_de_Compra from "./pages/Ordenes_de_Compra";
 import Autorizacion_de_facturas from "./pages/Autorizacion_de_facturas";
 import Historico_de_facturas from "./pages/Historico_de_facturas";
 import Proveedores from "./pages/Proveedores";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   return (
@@ -22,7 +23,9 @@ function App() {
         <Route path="/generarNuevaContra/:token" element={<GenerarNuevaContra />}/>
 
         {/* Layout principal */}
-        <Route path="/inicio" element={<InicioPP />}>
+        <Route element={<ProtectedRoute />}>
+
+        <Route path="/inicio" element={<InicioPP />} />
 
           {/* Inicio */}
           <Route index element={<Inicio />}/>

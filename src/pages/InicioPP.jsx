@@ -74,9 +74,8 @@ function InicioPP() {
     // Limpiar información de sesión
     localStorage.removeItem("usuario");
     localStorage.removeItem("token");
-
-    // Regresar al Login
-    navigate("/");
+    sessionStorage.removeItem("sesion");
+    navigate("/", { replace: true });
   };
 const rutas = {
   '/inicio': '1',
