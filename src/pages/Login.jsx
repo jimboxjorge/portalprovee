@@ -73,12 +73,19 @@ function Login() {
       const data = await response.json();
 
       if (data.success) {
+
         if (recordarme) {
           localStorage.setItem("correo", correo);
         } else {
           localStorage.removeItem("correo");
         }
+
+        // Crear sesión
+        sessionStorage.setItem("sesion", "true");
+
+        // Ir a inicio reemplazando el login en el historial
         navigate("/inicio", { replace: true });
+
         setCorreo("");
         setPassword("");
       }
